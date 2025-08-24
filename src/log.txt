@@ -1,0 +1,41 @@
+🛣️ Caminito de la foto: Front → Back
+
+Frontend
+
+Crea un FormData.
+
+Hace formData.append('image', archivoSeleccionado) → 'image' = nombre del campo que Multer va a buscar.
+
+Puede agregar más campos de texto al FormData.
+
+Hace axios.post(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } }) → todo va en el body, no en la URL.
+
+Backend
+
+Endpoint con upload.single('image') (middleware de Multer).
+
+Multer busca el archivo en el campo 'image', lo guarda en disco (destination + filename).
+
+Multer llena req.file con info del archivo guardado.
+
+req.body tiene los demás campos de texto.
+
+Controller/service valida usuario, actualiza BD con la ruta pública (/static/...) y responde 201/404/400 según corresponda.
+
+Servidor
+
+Guarda físicamente la foto en uploads/alumnos/id/photo.jpg.
+
+express.static('/static', ...) expone la carpeta para que cualquier navegador pueda pedir la imagen vía HTTP.
+
+Frontend/Navegador
+
+Recibe la ruta pública (ej: /static/alumnos/1/photo.jpg).
+
+Arma la URL completa (http://mi-api.com/static/alumnos/1/photo.jpg) y la pone en <img src="...">.
+
+El navegador hace GET a esa URL, el servidor sirve los bytes desde disco y la foto se renderiza.
+
+💡 Tip de memoria:
+
+“FormData mete archivo + texto → axios POST → Multer guarda archivo en disco (req.file) y texto en req.body → BD guarda ruta → frontend arma URL → navegador pide bytes → imagen en pantalla.”
