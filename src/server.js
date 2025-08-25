@@ -1,15 +1,19 @@
 import express from 'express';
 import cors from 'cors';
- const app = express();
- const port = 3000;
+import router from './controllers/UserController.js';
 
- app.use(cors());
- app.use(express.json());
+const app = express();
+const port = 3000;
 
- app.get('', (req, res) => {
-    res.send('API funcionando');
-  });
-  
-  app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
-  });
+app.use(cors());
+app.use(express.json());
+
+app.get('', (req, res) => {
+  res.send('API funcionando');
+});
+
+app.use("/", router);
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
