@@ -29,6 +29,29 @@ const storage = multer.diskStorage({
   });
 
 //endpoints
-router.post('/foto/:id',upload)
+router.post('/foto/:id', upload.single('image'), async (req,res)=>{
+  try{
+    const id=req.params.id;
+    const alumno = await svc.geyByIdAsync(id);
+      if(!alumno){
+        return "falta alumno"
+      }
+      if(!req.file){
+        return "falta archivo"
+      }
+    
+      const relativePath = `/uploads;/usuarios/${id}/${req.file.filename}`
+      const publicUrl = `/static/usuarios/${id}/${req.file.filename}`;
+      alumno.imagen=publicUrl;
+
+      returnEntity = svc.updateAlumno(alumno);
+      if(returnEntity==0){
+        return "No se pudo crear al alumno"
+      }
+  }
+  catch(err){
+    return "No se puedo actualizar la imagen"
+  }
+})
 
 export default router;

@@ -6,4 +6,10 @@ import cors from 'cors';
  app.use(cors());
  app.use(express.json());
 
- app.use("api/user/", )
+ app.get('', (req, res) => {
+    res.send('API funcionando');
+  });
+  
+  app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+  });
