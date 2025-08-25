@@ -14,6 +14,9 @@
         hace_deportes BOOLEAN
     );
 
+    ALTER TABLE alumnos
+    ADD COLUMN image VARCHAR(255) DEFAULT NULL;
+
     -- Tabla grupos_pdp
     CREATE TABLE grupos_pdp (
         id SERIAL PRIMARY KEY,
